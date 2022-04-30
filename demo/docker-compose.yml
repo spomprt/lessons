@@ -1,0 +1,10 @@
+version: '3.1'
+
+services:
+  demo:
+    build:
+      context: ../demo
+      dockerfile: Dockerfile
+    image: demo:latest
+
+
