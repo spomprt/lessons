@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: lesson1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lesson1
+  template:
+    metadata:
+      labels:
+        app: lesson1
+    spec:
+      containers:
+        - name: lesson1
+          image: spomprt/demo:latest
+          ports:
+            - containerPort: 8000
+
