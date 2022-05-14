@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lesson2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lesson2
+    spec:
+      containers:
+        - name: user-service
+          image: spomprt/users:latest
+          ports:
+            - containerPort: 8000
+        - env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: spring_datasource_url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: spring_datasource_username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map
+                  key: spring_datasource_password
+          volumeMounts:
+            - name: config
+              mountPath: "/config"
+              readOnly: true
+          name: user-service-properties

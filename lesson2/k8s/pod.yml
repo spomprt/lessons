@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod
+  labels:
+    app: lesson2
+spec:
+  containers:
+    - name: user-service
+      image: spomprt/users:latest
+      ports:
+        - containerPort: 8000
+      env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: config-map
+              key: spring_datasource_url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: config-map
+              key: spring_datasource_username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: config-map
+              key: spring_datasource_password
+      volumeMounts:
+        - name: config
+          mountPath: "/config"
+          readOnly: true

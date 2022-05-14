@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-map
+data:
+  spring_datasource_url: "jdbc:postgresql://localhost:5432/users"
+  spring_datasource_username: "postgres"
+  spring_datasource_password: "postgres"
