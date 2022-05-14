@@ -5,8 +5,6 @@ services:
   users-db:
     image: postgres:14.2
     restart: always
-    volumes:
-      - ./container-data/product-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:

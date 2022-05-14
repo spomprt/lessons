@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: config-map
 data:
-  spring_datasource_url: "jdbc:postgresql://localhost:5432/users"
-  spring_datasource_username: "postgres"
-  spring_datasource_password: "postgres"
+  database_name: "users"
+  datasource_url: "jdbc:postgresql://user-db-service:5432/users"
+  datasource_username: "postgres"
