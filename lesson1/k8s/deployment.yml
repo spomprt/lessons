@@ -18,4 +18,5 @@ spec:
         - name: lesson1
           image: spomprt/demo:latest
           ports:
-            - containerPort: 8000
+            - containerPort: 8080
+              name: lesson1
