@@ -1,0 +1,4 @@
+container:
+  image: postgres:14.2
+
+replicaCount: 1

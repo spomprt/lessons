@@ -3,6 +3,7 @@ package com.homework.lesson2.service;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homework.lesson2.entity.User;
+import com.homework.lesson2.entity.UserDto;
 import com.homework.lesson2.entity.UserUpdateDto;
 import com.homework.lesson2.exception.BadRequestException;
 import com.homework.lesson2.repo.UserRepository;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,16 +20,17 @@ public class UserService {
     private final ObjectMapper objectMapper;
     private final UserRepository userRepository;
 
-    public List<User> create(User user) {
+    public void create(UserDto userDto) {
+        User user = objectMapper.convertValue(userDto, User.class);
         userRepository.save(user);
-        return userRepository.findAll();
     }
 
-    public User read(String username) {
-        return userRepository.findById(username).orElseThrow(BadRequestException::new);
+    public UserDto read(String username) {
+        User user = userRepository.findById(username).orElseThrow(BadRequestException::new);
+        return objectMapper.convertValue(user, UserDto.class);
     }
 
-    public List<User> update(String username, UserUpdateDto updateDto) {
+    public void update(String username, UserUpdateDto updateDto) {
         User user = userRepository.findById(username).orElseThrow(BadRequestException::new);
         User result;
         try {
@@ -36,15 +39,15 @@ public class UserService {
             throw new RuntimeException(e.getMessage());
         }
         userRepository.save(result);
-        return userRepository.findAll();
     }
 
-    public List<User> delete(String username) {
+    public void delete(String username) {
         userRepository.delete(userRepository.findById(username).orElseThrow(BadRequestException::new));
-        return userRepository.findAll();
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> objectMapper.convertValue(user, UserDto.class))
+                .collect(Collectors.toList());
     }
 }

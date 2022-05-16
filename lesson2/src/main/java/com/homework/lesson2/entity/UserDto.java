@@ -2,16 +2,9 @@ package com.homework.lesson2.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 @Data
-@Entity
-@Table(name = "users")
-public class User {
+public class UserDto {
 
-    @Id
     private String username;
 
     private String email;
