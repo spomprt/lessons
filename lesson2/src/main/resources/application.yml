@@ -24,4 +24,4 @@ management:
         "[http.server.requests]": true
 
 server:
-  port: 8000
+  port: 9999
